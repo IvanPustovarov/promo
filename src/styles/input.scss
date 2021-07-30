@@ -33,6 +33,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      font-weight: bold;
+    }
+    div:hover {
+      background-color: black;
+      color: white;
     }
   }
   .input__delete {
@@ -45,17 +50,27 @@
     align-items: stretch;
     justify-items: stretch;
     margin-bottom: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
     .input__zero {
       grid-area: zer;
       outline: 2px solid black;
       display: grid;
       align-content: center;
     }
+    .input__zero:hover{
+      background-color: black;
+      color: white;
+    }
     .input__backspace {
       grid-area: back;
       outline: 2px solid black;
       display: grid;
       align-content: center;
+    }
+    .input__backspace:hover{
+      background-color: black;
+      color: white;
     }
   }
   .input__agreement {
@@ -99,5 +114,6 @@
     color: #565656;
     background-color: #86d3f4;
     border: none;
+    font-weight: bold;
   }
 }
