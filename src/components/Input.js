@@ -3,13 +3,20 @@ import "../styles/input.scss";
 
 const Input = () => {
   const [number, setNumber] = useState("");
-  //let patternString = `+7(_ _ _)_ _ _ - _ _ - _ _`;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    checkWithRegex(number);
+  }
 
   const handleNumberClick = (value) => {
     let newValue = value.toString(10);
     setNumber(`${number}${newValue}`);
-    checkWithRegex(number);
   };
+
+  const handleDeleteClick = (num) => {
+      setNumber(num.slice(0, -1));
+  }
 
   const checkWithRegex = (value) => {
     let regex = /^[9]{1}[12356789]{1}[\d]{8}$/;
@@ -56,7 +63,7 @@ const Input = () => {
       </p>
       <div className="input__numbers">{numbers}</div>
       <div className="input__delete">
-        <div className="input__backspace">стереть</div>
+        <div className="input__backspace" onClick={()=> handleDeleteClick(number)}>стереть</div>
         <div className="input__zero" onClick={() => handleNumberClick(0)}>
           0
         </div>
@@ -70,7 +77,7 @@ const Input = () => {
           согласие на обработку персональных данных
         </span>
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <button type="submit" className="input__button-submit">
           Подтвердить номер
         </button>
