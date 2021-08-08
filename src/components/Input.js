@@ -1,55 +1,60 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../styles/input.scss";
 
 const Input = () => {
   const [number, setNumber] = useState("");
-  const [numbersArray, setNumbersArray] = useState([]);
+  //let patternString = `+7(_ _ _)_ _ _ - _ _ - _ _`;
 
   const handleNumberClick = (value) => {
     let newValue = value.toString(10);
     setNumber(`${number}${newValue}`);
-    console.log("value: ", value);
+    checkWithRegex(number);
+  };
 
-    return console.log("numbers(string):  ", number);
+  const checkWithRegex = (value) => {
+    let regex = /^[9]{1}[12356789]{1}[\d]{8}$/;
+    let valid = regex.test(value);
+
+    console.log(valid);
   };
 
   const createNumber = () => {
+    let numbers = [];
     for (let index = 1; index < 10; index++) {
       const divContainer = React.createElement(
         "div",
         { onClick: () => handleNumberClick(index), key: index },
         `${index}`
       );
-      setNumbersArray((oldArray) => [...oldArray, divContainer]);
+      numbers.push(divContainer);
     }
-    return numbersArray;
+    return numbers;
   };
 
-  useEffect(() => {
-    createNumber();
-  }, []);
+  const setInputNumber = (value) => {
+    let patternString = "+7(___)___-__-__";
+    if(number.length) {
+      value.split("").forEach(el => {
+        patternString = patternString.replace("_", el)
+      })
+      return patternString;
+    }
+    return patternString;
+  };
+
+  const numbers = createNumber();
   return (
     <div className="input">
       <span className="input__text-number">
         Введите ваш номер мобильного телефона
       </span>
-      <span className="input__phone">+7(_ _ _)_ _ _ - _ _ - _ _</span>
+      <span className="input__phone">
+        {setInputNumber(number)}
+      </span>
       <p className="input__paragraph">
         и с Вами свяжется наш менеждер для дальнейшей консультации
       </p>
-      <div className="input__numbers">
-        {/* <div onClick= {()=> {handleNumberClick(1)}}>1</div>
-          <div onClick= {()=> {handleNumberClick(2)}}>2</div>
-          <div onClick= {()=> {handleNumberClick(3)}}>3</div>
-          <div onClick= {()=> {handleNumberClick(4)}}>4</div>
-          <div onClick= {()=> {handleNumberClick(5)}}>5</div>
-          <div onClick= {()=> {handleNumberClick(6)}}>6</div>
-          <div onClick= {()=> {handleNumberClick(7)}}>7</div>
-          <div onClick= {()=> {handleNumberClick(8)}}>8</div>
-          <div onClick= {()=> {handleNumberClick(9)}}>9</div> */}
-
-        {numbersArray}
-      </div>
+      <div className="input__numbers">{numbers}</div>
       <div className="input__delete">
         <div className="input__backspace">стереть</div>
         <div className="input__zero" onClick={() => handleNumberClick(0)}>
@@ -67,7 +72,7 @@ const Input = () => {
       </div>
       <form>
         <button type="submit" className="input__button-submit">
-          Подтвердить номер{" "}
+          Подтвердить номер
         </button>
       </form>
     </div>
