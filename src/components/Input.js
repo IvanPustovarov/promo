@@ -10,6 +10,7 @@ const Input = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setNumber(number);
+    console.log("graciac");
   };
 
   const handleNumberClick = (value) => {
@@ -22,28 +23,35 @@ const Input = () => {
     let newValue = value.slice(0, -1);
     setNumber(newValue);
     checkWithRegex(newValue);
+    if(newValue.length < 10) {
+      setButtonDisabled(true)
+    }
   };
 
-  const handleCheck = () => {
-    setCheck(!check);
-    console.log(check);
+  const handleCheck = (checker, valid) => {
+    setCheck(!checker);
+    if(checker && valid) {
+      console.log(`check: ${checker}, valid: ${valid}`)
+       return setButtonDisabled(true);
+    }
+    return setButtonDisabled(false);
   };
 
   const checkWithRegex = (value) => {
+    let valid = false;
     const regex = /^[9]{1}[12356789]{1}[\d]{8}$/;
+    setNumber(value);
     if (value.length < 10) {
-      setNumber(value);
       setNumberValid(false);
     }
     if (value.length === 10) {
-      setNumber(value);
-      let valid = regex.test(value);
+      valid = regex.test(value);
       setNumberValid(valid);
     }
     if (value.length > 10) {
-      setNumber(value);
       let newString = value.slice(0, 10);
       let valid = regex.test(newString);
+      setNumber(newString);
       setNumberValid(valid);
     }
   };
@@ -53,7 +61,7 @@ const Input = () => {
     for (let index = 1; index < 10; index++) {
       const divContainer = React.createElement(
         "div",
-        { onClick: () => handleNumberClick(index), key: index },
+        { onClick: () => handleNumberClick(index, check), key: index },
         `${index}`
       );
       numbers.push(divContainer);
@@ -90,7 +98,10 @@ const Input = () => {
         >
           стереть
         </div>
-        <div className="input__zero" onClick={() => handleNumberClick(0)}>
+        <div
+          className="input__zero"
+          onClick={() => handleNumberClick(0)}
+        >
           0
         </div>
       </div>
@@ -98,7 +109,7 @@ const Input = () => {
         <label className="input__check">
           <input
             type="checkbox"
-            onChange={() => handleCheck()}
+            onChange={() => handleCheck(check, numberValid)}
             disabled={!numberValid}
           />
           <span className="input__label"></span>
@@ -108,7 +119,11 @@ const Input = () => {
         </span>
       </div>
       <form onSubmit={handleSubmit}>
-        <button type="submit" className="input__button-submit">
+        <button
+          type="submit"
+          className= {buttonDisabled ? "input__button-submit" : "able" }
+          disabled={buttonDisabled}
+        >
           Подтвердить номер
         </button>
       </form>
