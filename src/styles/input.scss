@@ -1,4 +1,4 @@
-.input {
+.container {
   height: 720px;
   width: 380px;
   background-color: #86d3f4;
@@ -6,6 +6,22 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  .statement{
+    margin:  auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .statement_accept{
+      font-size: 32px;
+      font-weight: bold;
+      text-transform: uppercase;
+      padding: 0 47px 0 47px;
+    }
+    .statement_text{
+      margin-block-start: 0;
+      margin-block-end: 0;
+    }
+  }
   .input__text-number {
     padding: 72px 54px 0 54px;
     font-size: 26px;

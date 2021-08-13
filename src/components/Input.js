@@ -6,11 +6,12 @@ const Input = () => {
   const [numberValid, setNumberValid] = useState(false);
   const [check, setCheck] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [statement, setStatement] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setNumber(number);
-    console.log("graciac");
+    setStatement(true)
   };
 
   const handleNumberClick = (value) => {
@@ -31,7 +32,6 @@ const Input = () => {
   const handleCheck = (checker, valid) => {
     setCheck(!checker);
     if(checker && valid) {
-      console.log(`check: ${checker}, valid: ${valid}`)
        return setButtonDisabled(true);
     }
     return setButtonDisabled(false);
@@ -81,8 +81,18 @@ const Input = () => {
   };
 
   const numbers = createNumber();
+  if(statement){
+    return (
+      <div className="container">
+        <div className="statement">
+          <span className="statement_accept">заявка принята</span>
+          <p className="statement_text">Держите телефон под рукой. <br/> Скоро с Вами свяжется наш менеджер. </p>
+        </div>
+      </div>
+    )
+  }
   return (
-    <div className="input">
+    <div className="container">
       <span className="input__text-number">
         Введите ваш номер мобильного телефона
       </span>
